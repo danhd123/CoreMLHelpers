@@ -27,11 +27,29 @@ class MenuViewController: UITableViewController {
   func pixelBuffer2RGB() -> UIImage? {
     let image = UIImage(named: "cat.jpg")!
 
+    /*
+    // Enable this to test rotations:
+    if let pixelBuffer = image.rotated(by: 15, keepSize: true).pixelBuffer(width: 240, height: 160) {
+      if let image = UIImage(pixelBuffer: pixelBuffer) {
+        return image
+      }
+    }
+    */
+
     // Convert image to CVPixelBuffer.
     if let pixelBuffer = image.pixelBuffer(width: 150, height: 150) {
 
       // Test resizing of pixel buffer.
       if let resizedPixelBuffer = resizePixelBuffer(pixelBuffer, width: 200, height: 300) {
+
+        /*
+        // Enable this to test the rotation code:
+        if let rotatedPixelBuffer = rotate90PixelBuffer(resizedPixelBuffer, factor: 1) {
+          if let image = UIImage(pixelBuffer: rotatedPixelBuffer) {
+            return image
+          }
+        }
+        */
 
         // Convert back to image.
         if let image = UIImage(pixelBuffer: resizedPixelBuffer) {
@@ -48,7 +66,7 @@ class MenuViewController: UITableViewController {
   var resizedPixelBuffer: CVPixelBuffer?
 
   func pixelBuffer2Grayscale() -> UIImage? {
-    let image = UIImage(named: "cat.jpg")!
+    let image = UIImage(named: "cat.jpg")!  //.rotated(by: 15)
 
     // Allocate this pixel buffer just once and keep reusing it.
     resizedPixelBuffer = createPixelBuffer(width: 200, height: 300)

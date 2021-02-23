@@ -1,5 +1,5 @@
 /*
-  Copyright (c) 2017-2019 M.I. Hollemans
+  Copyright (c) 2017-2021 M.I. Hollemans
 
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to
@@ -27,7 +27,15 @@ import VideoToolbox
 
 extension UIImage {
   /**
-    Resizes the image to width x height and converts it to an RGB CVPixelBuffer.
+    Converts the image to an ARGB `CVPixelBuffer`.
+  */
+  public func pixelBuffer() -> CVPixelBuffer? {
+    return pixelBuffer(width: Int(size.width), height: Int(size.height))
+  }
+
+  /**
+    Resizes the image to `width` x `height` and converts it to an ARGB
+    `CVPixelBuffer`.
   */
   public func pixelBuffer(width: Int, height: Int) -> CVPixelBuffer? {
     return pixelBuffer(width: width, height: height,
@@ -37,7 +45,15 @@ extension UIImage {
   }
 
   /**
-    Resizes the image to width x height and converts it to a grayscale CVPixelBuffer.
+    Converts the image to a grayscale `CVPixelBuffer`.
+  */
+  public func pixelBufferGray() -> CVPixelBuffer? {
+    return pixelBufferGray(width: Int(size.width), height: Int(size.height))
+  }
+
+  /**
+    Resizes the image to `width` x `height` and converts it to a grayscale
+    `CVPixelBuffer`.
   */
   public func pixelBufferGray(width: Int, height: Int) -> CVPixelBuffer? {
     return pixelBuffer(width: width, height: height,
@@ -46,8 +62,14 @@ extension UIImage {
                        alphaInfo: .none)
   }
 
-  func pixelBuffer(width: Int, height: Int, pixelFormatType: OSType,
-                   colorSpace: CGColorSpace, alphaInfo: CGImageAlphaInfo) -> CVPixelBuffer? {
+  /**
+    Resizes the image to `width` x `height` and converts it to a `CVPixelBuffer`
+    with the specified pixel format, color space, and alpha channel.
+  */
+  public func pixelBuffer(width: Int, height: Int,
+                          pixelFormatType: OSType,
+                          colorSpace: CGColorSpace,
+                          alphaInfo: CGImageAlphaInfo) -> CVPixelBuffer? {
     var maybePixelBuffer: CVPixelBuffer?
     let attrs = [kCVPixelBufferCGImageCompatibilityKey: kCFBooleanTrue,
                  kCVPixelBufferCGBitmapContextCompatibilityKey: kCFBooleanTrue]
